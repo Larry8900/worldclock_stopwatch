@@ -23,8 +23,8 @@ searchButton.addEventListener('click',getTemp);
 
 async function getTemp() {
     const city = userInput.value
-    const url = `http://api.weatherapi.com/v1/current.json?key=e881d1cec5db41f4b88231239240103&q=${city}&aqi=no`
-    const url2 = `https://country-codes4.p.rapidapi.com/country-codes?name=${city}`;
+    const weatherUrl = `https://api.weatherapi.com/v1/current.json?key=e881d1cec5db41f4b88231239240103&q=${city}&aqi=no`
+    const countryCodeUrl = `https://country-codes4.p.rapidapi.com/country-codes?name=${city}`;
     const options = {
         method: 'GET',
         headers: {
@@ -32,15 +32,29 @@ async function getTemp() {
             'X-RapidAPI-Host': 'country-codes4.p.rapidapi.com'
         }
     };
+
     console.log(city)
     try{
-        const response = await fetch(url)
-        const response2 = await fetch(url2)
-        const result2 = await response2.json
-        const result = await response.json();
-        console.log(result,result2);
-        $('#search-image').attr('src', result.current.condition.icon)
+        const response = await fetch(weatherUrl)
+        const weatherData = await response.json();
+
+
+        const response2 = await fetch(countryCodeUrl, options);
+        const countryCodeData = await response2.json();
+
+        console.log(weatherData,countryCodeData);
         
+        
+        if(countryCodeData.length == 0){
+            $('#search-image').attr('src', weatherData.current.condition.icon);
+        }
+        else {
+
+            let alpha2Code = countryCodeData[0].alpha2Code;
+             $('#search-image').attr('src', `http://www.geognos.com/api/en/countries/flag/${alpha2Code}.png`)
+             console.log(alpha2Code)
+        }
+       
     }
    
     catch(error) {
