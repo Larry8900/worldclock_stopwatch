@@ -30,7 +30,7 @@ main{
 main h4{
     text-align: center;
     color: rgb(71, 68, 68);
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 600;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     margin-top: 10%;
@@ -55,6 +55,14 @@ main h5{
     padding: 3%;
     display: flex;
     text-align: center;
+}
+.search-display{
+    display: none;
+    background-color: rgb(202, 227, 238);
+    border-radius: 30px;
+    padding: 5%;
+    margin: 2% auto;
+    margin-bottom: 20px;
 }
 .search-input{
     border-radius: 20px 0px 0px 20px;
@@ -102,7 +110,7 @@ section h5{
     padding: 5%;
     
 }
-.country-div{
+.country-div, .search-div{
     margin-top: 20px;
    font-size: 1rem;
    font-weight: 500;
