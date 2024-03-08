@@ -3,30 +3,43 @@
 // header
 let userTime = document.getElementById('user_time');
 let userLocation = document.getElementById('user-location');
-let userDate = document.getElementById('user-date')
+let userDate = document.getElementById('user_date')
 
 // Date methhod
 let date = new Date()
-let hours = date.getHours()
-let minutes = date.getMinutes()
-let seconds = date.getSeconds()
-userTime.textContent = `${hours}: ${minutes}: ${seconds}`;
+let hours = date.getHours().toString().padStart(2, '0')
+let minutes = date.getMinutes().toString().padStart(2, '0')
+let seconds = date.getSeconds().toString().padStart(2, '0')
+userTime.textContent = `${hours}: ${minutes}: ${seconds}`
+userDate.textContent = date.toDateString()
 
 // to get the user's location 
+userLocationCall()
 
+async function userLocationCall(){
+    const options = {method: 'GET'};
+    const url = 'https://ipgeolocation.abstractapi.com/v1?api_key=1edc3bed50bd418181131985c368acb7'
+      
+    try{
+        const response = await fetch (url);
+        const data = await response.json()
+        userLocation.textContent = data.country
+        $('.country_flag').attr('src',data.flag.png )
+        console.log(data)
+    }
+    catch(error) {
+        console.log(error)
+    }
+    
+}
 
-$.getJSON("https://ipgeolocation.abstractapi.com/v1/?api_key=1edc3bed50bd418181131985c368acb7&ip_address=155.93.102.10", function(data) {
-    console.log(data);
-})
-// search
+// search input & button 
 let userInput = document.getElementById('user-input');
 
 let searchButton = document.getElementById('search-btn');
 
 // country cards using jquery methods
 // since the country name and flag will be constant i'll be selecting the time and weather only
-
-
 
 searchButton.addEventListener('click',getTemp);
 
