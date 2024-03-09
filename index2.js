@@ -84,7 +84,7 @@ async function getTemp() {
         else {
 
             let alpha2Code = countryCodeData[0].alpha2Code;
-             $('#search-image').attr('src', `http://www.geognos.com/api/en/countries/flag/${alpha2Code}.png`)
+             $('#search-image').attr('src', `https://flagsapi.com/${alpha2code}/shiny/64.png`)
              $('#city').text(countryCodeData[0].name)
              $('#time').text(weatherData.location.localtime)
              $('#temp').text(weatherData.current.temp_c)
