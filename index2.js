@@ -5,6 +5,7 @@ let userTime = document.getElementById('user_time');
 let userLocation = document.getElementById('user-location');
 let userDate = document.getElementById('user_date')
 
+
 // Date methhod
 let date = new Date()
 let hours = date.getHours().toString().padStart(2, '0')
@@ -76,15 +77,10 @@ async function getTemp() {
             $('#time').text(weatherData.location.localtime)
             $('#temp').text(weatherData.current.temp_c)
         }
-        // else if(weatherData.includes('error') ){
-        //     alert(weatherData.error.message)
-        //     $('.search-display').css('display', 'none')
-
-        // }
         else {
 
-            let alpha2Code = countryCodeData[0].alpha2Code;
-             $('#search-image').attr('src', `https://flagsapi.com/${alpha2code}/shiny/64.png`)
+            let countryIso2Code = countryCodeData[0].alpha2Code
+             $('#search-image').attr('src', `https://flagsapi.com/${countryIso2Code}/shiny/64.png`)
              $('#city').text(countryCodeData[0].name)
              $('#time').text(weatherData.location.localtime)
              $('#temp').text(weatherData.current.temp_c)
@@ -97,4 +93,23 @@ async function getTemp() {
         console.log(error)
     }
 
+}
+
+// Preloaded Countries
+let canada = document.getElementById('canada_time');
+let france = document.getElementById('france_time')
+let russia = document.getElementById('russia_time')
+let australia = document.getElementById('australia_time')
+let netherlands = document.getElementById('netherlands_time')
+
+
+let australia_url = "http://api.weatherapi.com/v1/current.json?key=e881d1cec5db41f4b88231239240103&q=australia&aqi=yes"
+let canada_url = "http://api.weatherapi.com/v1/current.json?key=e881d1cec5db41f4b88231239240103&q=canada&aqi=yes"
+let france_url = "http://api.weatherapi.com/v1/current.json?key=e881d1cec5db41f4b88231239240103&q=france&aqi=yes"
+let netherlands_url = "http://api.weatherapi.com/v1/current.json?key=e881d1cec5db41f4b88231239240103&q=netherlands&aqi=yes"
+let russia_url = "http://api.weatherapi.com/v1/current.json?key=e881d1cec5db41f4b88231239240103&q=russia&aqi=yes"
+
+try {
+    const australia = await fetch(australia_url)
+    const weatherData = await response.json()
 }
