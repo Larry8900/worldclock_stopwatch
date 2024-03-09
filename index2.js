@@ -26,7 +26,6 @@ async function userLocationCall(){
         const data = await response.json()
         userLocation.textContent = data.country
         $('.country_flag').attr('src',data.flag.png )
-        console.log(data)
     }
     catch(error) {
         console.log(error)
@@ -103,13 +102,59 @@ let australia = document.getElementById('australia_time')
 let netherlands = document.getElementById('netherlands_time')
 
 
-let australia_url = "http://api.weatherapi.com/v1/current.json?key=e881d1cec5db41f4b88231239240103&q=australia&aqi=yes"
-let canada_url = "http://api.weatherapi.com/v1/current.json?key=e881d1cec5db41f4b88231239240103&q=canada&aqi=yes"
-let france_url = "http://api.weatherapi.com/v1/current.json?key=e881d1cec5db41f4b88231239240103&q=france&aqi=yes"
-let netherlands_url = "http://api.weatherapi.com/v1/current.json?key=e881d1cec5db41f4b88231239240103&q=netherlands&aqi=yes"
-let russia_url = "http://api.weatherapi.com/v1/current.json?key=e881d1cec5db41f4b88231239240103&q=russia&aqi=yes"
+// let australia_url = "https://api.weatherapi.com/v1/current.json?key=e881d1cec5db41f4b88231239240103&q=australia&aqi=yes"
+// let canada_url = "https://api.weatherapi.com/v1/current.json?key=e881d1cec5db41f4b88231239240103&q=canada&aqi=yes"
+// let france_url = "https://api.weatherapi.com/v1/current.json?key=e881d1cec5db41f4b88231239240103&q=france&aqi=yes"
+// let netherlands_url = "http://api.weatherapi.com/v1/current.json?key=e881d1cec5db41f4b88231239240103&q=netherlands&aqi=yes"
+// let russia_url = "http://api.weatherapi.com/v1/current.json?key=e881d1cec5db41f4b88231239240103&q=russia&aqi=yes"
 
-try {
-    const australia = await fetch(australia_url)
-    const weatherData = await response.json()
+
+async function getDet() {
+    let countryArray = ['canada', 'france', 'russia', 'australia', 'netherlands'];
+
+    try {
+        const promises = countryArray.map(async country => {
+            const url = `https://api.weatherapi.com/v1/current.json?key=e881d1cec5db41f4b88231239240103&q=${country}&aqi=yes`;
+            console.log(url);
+            const response = await fetch(url);
+            const result = await response.json();
+            return result;
+        });
+
+        const allCountryData = await Promise.all(promises);
+        console.log(allCountryData);
+        // supplying the DOM with each country weather details
+
+        $("#canada_time").text(allCountryData[0].location.localtime)
+        $('#canada_weather').attr('src', allCountryData[0].current.condition.icon)
+        $('#canada_temp').text(allCountryData[0].current.temp_c)
+        
+        // France
+        $("#france_time").text(allCountryData[1].location.localtime)
+        $('#france_weather').attr('src', allCountryData[1].current.condition.icon)
+        $('#france_temp').text(allCountryData[1].current.temp_c)
+
+        //Russia
+        $("#russia_time").text(allCountryData[2].location.localtime)
+        $('#russia_weather').attr('src', allCountryData[2].current.condition.icon)
+        $('#russia_temp').text(allCountryData[2].current.temp_c)
+
+        //Australia
+        $("#australia_time").text(allCountryData[3].location.localtime)
+        $('#australia_weather').attr('src', allCountryData[3].current.condition.icon)
+        $('#australia_temp').text(allCountryData[3].current.temp_c)
+
+        //Netherlands
+        $("#netherlands_time").text(allCountryData[4].location.localtime)
+        $('#netherlands_weather').attr('src', allCountryData[4].current.condition.icon)
+        $('#netherlands_temp').text(allCountryData[4].current.temp_c)
+
+
+
+    } catch (error) {
+        console.error(error);
+    }
 }
+
+getDet()
+

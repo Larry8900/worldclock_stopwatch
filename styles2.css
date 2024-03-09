@@ -108,13 +108,14 @@ section h5{
 .country-card{
     display: flex;
     margin-top: -10px;
+    padding-right: 10%;
 }
-.current-time{
+/* .current-time{
     margin-top: 20px;
     padding-right: 5px;
     text-align: left;
     right: 10px;
-}
+} */
 .img-fluid{
     border-radius: 50%;
     width: 100%;
