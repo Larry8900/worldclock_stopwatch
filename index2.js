@@ -25,7 +25,6 @@ async function userLocationCall(){
         const response = await fetch (url);
         const data = await response.json()
         userLocation.textContent = data.country
-        $('.country_flag').attr('src',data.flag.png )
     }
     catch(error) {
         console.log(error)
@@ -47,7 +46,7 @@ searchButton.addEventListener('click',getTemp);
 // countryCode api is used to fetch a country is20 alpha code which is used to return the country flag
 
 async function getTemp() {
-    $('.search-display').css('display', 'flex')
+   
     const city = userInput.value
     const weatherUrl = `https://api.weatherapi.com/v1/current.json?key=e881d1cec5db41f4b88231239240103&q=${city}&aqi=no`
     const countryCodeUrl = `https://country-codes4.p.rapidapi.com/country-codes?name=${city}`;
@@ -66,9 +65,9 @@ async function getTemp() {
 
         const response2 = await fetch(countryCodeUrl, options)
         const countryCodeData = await response2.json()
-
         console.log(weatherData,countryCodeData)
-        console.log()
+        
+        $('.search-display').css('display', 'flex');
 
         if(countryCodeData.length == 0){
             $('#search-image').attr('src', weatherData.current.condition.icon)
@@ -85,8 +84,9 @@ async function getTemp() {
              $('#temp').text(weatherData.current.temp_c)
              console.log(alpha2Code)
         }
-       
+        
     }
+    
    
     catch(error) {
         console.log(error)
@@ -94,23 +94,8 @@ async function getTemp() {
 
 }
 
-// Preloaded Countries
-let canada = document.getElementById('canada_time');
-let france = document.getElementById('france_time')
-let russia = document.getElementById('russia_time')
-let australia = document.getElementById('australia_time')
-let netherlands = document.getElementById('netherlands_time')
-
-
-// let australia_url = "https://api.weatherapi.com/v1/current.json?key=e881d1cec5db41f4b88231239240103&q=australia&aqi=yes"
-// let canada_url = "https://api.weatherapi.com/v1/current.json?key=e881d1cec5db41f4b88231239240103&q=canada&aqi=yes"
-// let france_url = "https://api.weatherapi.com/v1/current.json?key=e881d1cec5db41f4b88231239240103&q=france&aqi=yes"
-// let netherlands_url = "http://api.weatherapi.com/v1/current.json?key=e881d1cec5db41f4b88231239240103&q=netherlands&aqi=yes"
-// let russia_url = "http://api.weatherapi.com/v1/current.json?key=e881d1cec5db41f4b88231239240103&q=russia&aqi=yes"
-
-
-async function getDet() {
-    let countryArray = ['canada', 'france', 'russia', 'australia', 'netherlands'];
+async function getCountryDetails() {
+    let countryArray = ['canada', 'france', 'russia', 'australia', 'nigeria'];
 
     try {
         const promises = countryArray.map(async country => {
@@ -124,7 +109,9 @@ async function getDet() {
         const allCountryData = await Promise.all(promises);
         console.log(allCountryData);
         // supplying the DOM with each country weather details
+        //Pre loaded Countries
 
+        //Canada
         $("#canada_time").text(allCountryData[0].location.localtime)
         $('#canada_weather').attr('src', allCountryData[0].current.condition.icon)
         $('#canada_temp').text(allCountryData[0].current.temp_c)
@@ -145,9 +132,9 @@ async function getDet() {
         $('#australia_temp').text(allCountryData[3].current.temp_c)
 
         //Netherlands
-        $("#netherlands_time").text(allCountryData[4].location.localtime)
-        $('#netherlands_weather').attr('src', allCountryData[4].current.condition.icon)
-        $('#netherlands_temp').text(allCountryData[4].current.temp_c)
+        $("#nigeria_time").text(allCountryData[4].location.localtime)
+        $('#nigeria_weather').attr('src', allCountryData[4].current.condition.icon)
+        $('#nigeria_temp').text(allCountryData[4].current.temp_c)
 
 
 
@@ -156,5 +143,5 @@ async function getDet() {
     }
 }
 
-getDet()
+getCountryDetails()
 
